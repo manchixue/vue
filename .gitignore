@@ -1,0 +1,8 @@
+# Created by .ignore support plugin (hsz.mobi)
+.idea
+.git
+.vscode/*
+*.code-workspace
+dist/
+node_modules/
+yarn.lock
