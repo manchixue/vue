@@ -44,7 +44,6 @@ function defineReactive (target, key, value) {
 		},
 		set (newValue) {
 			if (newValue === value) return;
-			console.log(`${key}修改值`);
 			observe(newValue);
 			value = newValue;
 		}

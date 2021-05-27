@@ -16,7 +16,6 @@ let methods = [
 methods.forEach(method => {
 	arrayMethods[method] = function (...args) {
 		let ret = oldArrayPrototype[method].call(this, ...args);
-		console.log('执行数组方法');
 		let inserted = null;
 		let ob = this.__ob__;
 		// 新增的属性
