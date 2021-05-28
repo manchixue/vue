@@ -57,6 +57,6 @@ export function generate (ast) {
 	let code = `_c('${ast.tag}',${
 		ast.attrs.length ? genProps(ast.attrs) : 'undefined'
 	}${ children ? `,${children}` : '' })`;
-
+	console.log(code);
 	return code;
 }

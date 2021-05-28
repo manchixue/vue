@@ -8,7 +8,6 @@ export function initMixin (Vue) {
 
 		initState(vm);
 
-
 		if (vm.$options.el) {
 
 			// 组件挂载
@@ -31,5 +30,10 @@ export function initMixin (Vue) {
 			let render = compileToFunction(template);
 			opts.render = render;
 		}
+
+		// 开始挂载组件
+		let vnode = this._render();
+		console.log(vnode);
+
 	}
 }
