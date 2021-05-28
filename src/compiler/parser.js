@@ -109,6 +109,5 @@ export function parseHTML (html) {
 			advance(chars.length);
 		}
 	}
-	console.log(root);
 	return root;
 }
