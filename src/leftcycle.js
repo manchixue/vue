@@ -1,4 +1,5 @@
 import { patch } from "./vdom/patch";
+import Watcher from "./observe/watch";
 
 export function mountComponent (vm) {
 
@@ -7,7 +8,9 @@ export function mountComponent (vm) {
 		vm._update(vm._render());
 	}
 
-	updateComponent();
+	new Watcher(vm, updateComponent, () => {
+		// 更新完后面的回调
+	}, true); // true表示是渲染watcher
 }
 
 export function lifecycleMixin (Vue) {
