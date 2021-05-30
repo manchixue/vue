@@ -1,5 +1,6 @@
 import { initState } from "./state";
 import { compileToFunction } from "./compiler";
+import { mountComponent } from "./leftcycle";
 
 export function initMixin (Vue) {
 	Vue.prototype._init = function (options) {
@@ -32,8 +33,6 @@ export function initMixin (Vue) {
 		}
 
 		// 开始挂载组件
-		let vnode = this._render();
-		console.log(vnode);
-
+		mountComponent(vm);
 	}
 }

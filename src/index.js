@@ -1,5 +1,6 @@
 import { initMixin } from "./init";
 import { renderMixin } from "./render";
+import { lifecycleMixin } from "./leftcycle";
 
 
 function Vue (options) {
@@ -10,6 +11,7 @@ function Vue (options) {
 
 initMixin(Vue);
 renderMixin(Vue);
+lifecycleMixin(Vue);
 
 export default Vue;
 

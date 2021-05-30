@@ -4,7 +4,6 @@ function genProps (attrs) {
 	let str = '';
 	for (let i = 0; i < attrs.length; i++) {
 		let attr = attrs[i];
-		console.log(attr.value);
 		if (attr.name === 'style') {
 			let styles = {}
 			attr.value.replace(/([^;:]+):([^;:]+)/g, function () {
@@ -57,6 +56,5 @@ export function generate (ast) {
 	let code = `_c('${ast.tag}',${
 		ast.attrs.length ? genProps(ast.attrs) : 'undefined'
 	}${ children ? `,${children}` : '' })`;
-	console.log(code);
 	return code;
 }
