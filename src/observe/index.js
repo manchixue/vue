@@ -10,10 +10,20 @@ export function observe (value) {
 	return new Observe(value);
 }
 
+function dependArray (value) {
+	for (let i = 0; i < value.length; i++) {
+		let current = value[i];
+		current.__ob__ && current.__ob__.dep.depend();
+		if (Array.isArray(current)) {
+			dependArray(current);
+		}
+	}
+}
+
 class Observe {
 	constructor (value) {
 		// value.__ob__ = this;
-
+		this.dep = new Dep();
 		Object.defineProperty(value, '__ob__', {
 			value: this,
 			enumerable: false
@@ -39,11 +49,18 @@ class Observe {
 }
 function defineReactive (target, key, value) {
 	let dep = new Dep();
-	observe(value);
+
+	let childOb = observe(value);
 	return Object.defineProperty(target, key, {
 		get () {
 			if (Dep.target) {
 				dep.depend();
+				if (childOb) {
+					childOb.dep.depend();
+					if (Array.isArray(value)) {
+						dependArray(value);
+					}
+				}
 			}
 			return value;
 		},

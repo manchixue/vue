@@ -12,9 +12,9 @@ export let isArray = Array.isArray;
 let callbacks = [];
 let waiting = false;
 let flushCallback = () => {
-	callbacks.forEach(fn => fn());
 	callbacks = [];
 	waiting = false;
+	callbacks.forEach(fn => fn());
 }
 export function nextTick (fn) {
 	callbacks.push(fn);
