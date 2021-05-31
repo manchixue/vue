@@ -23,3 +23,55 @@ export function nextTick (fn) {
 		Promise.resolve().then(flushCallback);
 	}
 }
+
+const lifeCycles = [
+	'beforeCreate',
+	'created',
+	'beforeMount',
+	'mounted',
+	'beforeUpdate',
+	'updated',
+	'beforeDestroy',
+	'destroyed'
+];
+let strats = {};
+
+lifeCycles.forEach(item => {
+	strats[item] = function (parentVal, childVal) {
+		if (childVal) {
+			if (parentVal) {
+				return parentVal.concat(childVal);
+			} else {
+				return [childVal];
+			}
+		} else {
+			return parentVal;
+		}
+	}
+})
+
+export function mergeOptions (parentVal, childVal) {
+	const options = {};
+	for (const parentValKey in parentVal) {
+		if (parentVal.hasOwnProperty(parentValKey)) {
+			mergeField(parentValKey);
+		}
+	}
+	for (const childValKey in childVal) {
+		if (!parentVal.hasOwnProperty(childValKey)) {
+			mergeField(childValKey);
+		}
+	}
+
+
+	function mergeField (key) {
+		let strat = strats[key];
+		if (strat) {
+			options[key] = strat(parentVal[key], childVal[key]);
+		} else {
+			options[key] = childVal[key] || parentVal[key];
+		}
+	}
+
+	return options
+}

@@ -1,12 +1,12 @@
 import { initState } from "./state";
 import { compileToFunction } from "./compiler";
 import { mountComponent } from "./leftcycle";
-import { nextTick } from "./utils";
+import { mergeOptions, nextTick } from "./utils";
 
 export function initMixin (Vue) {
 	Vue.prototype._init = function (options) {
 		let vm = this;
-		vm.$options = options;
+		vm.$options = mergeOptions(vm.constructor.options, options);
 
 		initState(vm);
 
