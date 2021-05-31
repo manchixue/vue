@@ -42,6 +42,7 @@ lifeCycles.forEach(item => {
 			if (parentVal) {
 				return parentVal.concat(childVal);
 			} else {
+				if (isArray(childVal)) return childVal;
 				return [childVal];
 			}
 		} else {
