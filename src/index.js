@@ -2,6 +2,8 @@ import { initMixin } from "./init";
 import { renderMixin } from "./render";
 import { lifecycleMixin } from "./liftcycle";
 import { initGlobalAPI } from "./global-api";
+import { compileToFunction } from "./compiler";
+import { createElm, patch } from "./vdom/patch";
 
 
 function Vue (options) {
@@ -17,6 +19,34 @@ initGlobalAPI(Vue);
 
 export default Vue;
 
+let vm1 = new Vue({
+	data () {
+		return {
+			name: 'test'
+		}
+	}
+})
+
+let render1 = compileToFunction(`<div style="color:red;font-size: 18px">{{name}}</div>`);
+let oldVnode = render1.call(vm1);
+
+let el1 = createElm(oldVnode);
+document.body.appendChild(el1);
+
+let vm2 = new Vue({
+	data () {
+		return {
+			name: 'vm2'
+		}
+	}
+})
+
+let render2 = compileToFunction(`<div style="color:blue;background:green">{{name}}</div>`);
+let vnode = render2.call(vm2);
+
+setTimeout(() => {
+	patch(oldVnode, vnode);
+}, 1500)
 
 // vue步骤
 // 1. new Vue 会调用_init方法进行初始化操作
