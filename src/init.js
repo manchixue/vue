@@ -1,6 +1,6 @@
 import { initState } from "./state";
 import { compileToFunction } from "./compiler";
-import { mountComponent } from "./leftcycle";
+import { mountComponent } from "./liftcycle";
 import { mergeOptions, nextTick } from "./utils";
 
 export function initMixin (Vue) {

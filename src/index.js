@@ -1,6 +1,6 @@
 import { initMixin } from "./init";
 import { renderMixin } from "./render";
-import { lifecycleMixin } from "./leftcycle";
+import { lifecycleMixin } from "./liftcycle";
 import { initGlobalAPI } from "./global-api";
 
 

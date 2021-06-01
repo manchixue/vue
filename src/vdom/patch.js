@@ -28,6 +28,14 @@ function createElm (vnode) {
 
 function updateProperties (el, props = {}) {
 	for (const propsKey in props) {
-		el.setAttribute(propsKey, props[propsKey]);
+		if (propsKey === 'style') {
+			const styleObj = props[propsKey];
+			Object.keys(styleObj).forEach((styleKey) => {
+				el.style[styleKey] = styleObj[styleKey]
+			})
+
+		} else {
+			el.setAttribute(propsKey, props[propsKey]);
+		}
 	}
 }
