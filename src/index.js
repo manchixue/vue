@@ -27,7 +27,15 @@ let vm1 = new Vue({
 	}
 })
 
-let render1 = compileToFunction(`<div style="color:red;font-size: 18px">{{name}}</div>`);
+let render1 = compileToFunction(`<ul>
+	<li key="a">
+	<div>aaaaa</div>
+	<div>bbbbb</div>
+</li>
+	<li key="b">b</li>
+	<li key="c">c</li>
+	<li key="d">d</li>
+</ul>`);
 let oldVnode = render1.call(vm1);
 
 let el1 = createElm(oldVnode);
@@ -41,7 +49,16 @@ let vm2 = new Vue({
 	}
 })
 
-let render2 = compileToFunction(`<div style="color:blue;background:green">{{name}}</div>`);
+let render2 = compileToFunction(`<ul>
+
+<li style="color: red;" key="a"><div>aaaaa1</div>
+	<div>bbbbb</div></li>
+<li style="color: yellow;" key="b">b</li>
+<li style="color: blue;" key="c">c</li>
+<li style="color: green;" key="d">d</li>
+<li style="color: green;" key="e">e</li>
+<li style="color: blue;" key="f">f</li>
+</ul>`);
 let vnode = render2.call(vm2);
 
 setTimeout(() => {
