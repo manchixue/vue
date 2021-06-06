@@ -51,6 +51,15 @@ lifeCycles.forEach(item => {
 	}
 })
 
+
+strats.components = function (parentVal, childVal = {}) {
+	let res = Object.create(parentVal)
+	for (const childValKey in childVal) {
+		res[childValKey] = childVal[childValKey]
+	}
+	return res;
+}
+
 export function mergeOptions (parentVal, childVal) {
 	const options = {};
 	for (const parentValKey in parentVal) {
@@ -76,3 +85,19 @@ export function mergeOptions (parentVal, childVal) {
 
 	return options
 }
+
+
+function makeMap(str){
+	let tagList = str.split(',');
+	return function(tagName){
+		return tagList.includes(tagName)
+	}
+}
+
+export const isReservedTag = makeMap(
+	'template,script,style,element,content,slot,link,meta,svg,view,button,' +
+	'a,div,img,image,text,span,input,switch,textarea,spinner,select,' +
+	'slider,slider-neighbor,indicator,canvas,' +
+	'list,cell,header,loading,loading-indicator,refresh,scrollable,scroller,' +
+	'video,web,embed,tabbar,tabheader,datepicker,timepicker,marquee,countdown'
+)

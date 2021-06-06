@@ -2,6 +2,10 @@ import { isString } from "../utils";
 import { isSameNode } from "./index";
 
 export function patch (oldVnode, vnode) {
+	if (!oldVnode) {
+		return createElm(vnode);
+	}
+
 	const isRealElement = oldVnode.nodeType;
 	if (isRealElement) { // 初渲染
 		let elm = createElm(vnode);
@@ -113,9 +117,22 @@ function updateChildren (el, oldChildren, newChildren) {
 
 }
 
+function isCreateComponent (vnode) {
+	let i = vnode.data;
+	if ((i = i.hook) && (i = i.init)) {
+		i(vnode);
+	}
+	if (vnode.componentInstance) { // 说明是组件
+		return true;
+	}
+}
+
 export function createElm (vnode) {
 	 let { tag, data, children, text, vm } = vnode;
 	 if (isString(tag)) {
+	 	if (isCreateComponent(vnode)) {
+	 		return vnode.componentInstance.$el;
+	    }
 	 	vnode.el = document.createElement(tag);
 		 updateProperties(vnode)
 	 	children.forEach((child) => {
